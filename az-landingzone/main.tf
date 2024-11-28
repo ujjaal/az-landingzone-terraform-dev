@@ -8,9 +8,16 @@ terraform {
       version = "~> 3.107"
     }
   }
+  backend "azurerm" {
+  resource_group_name  = var.stgacntrg
+  storage_account_name = var.stgacnt
+  container_name       = var.stgcontainer
+  key                  = "terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
+  use_oidc = true
   features {}
 }
 
@@ -24,7 +31,7 @@ data "azurerm_client_config" "core" {}
 
 module "enterprise_scale" {
   source  = "Azure/caf-enterprise-scale/azurerm"
-  version = "<version>" # change this to your desired version, https://www.terraform.io/language/expressions/version-constraints
+  version = "latest" # change this to your desired version, https://www.terraform.io/language/expressions/version-constraints
 
   default_location = "northeurope"
 
