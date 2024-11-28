@@ -61,7 +61,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: avm-labs/part01-base
+        working-directory: az-landingzone
 
     steps:
     
@@ -94,8 +94,8 @@ jobs:
       run: tflint -f compact --recursive 
 
 
-  DeployToDev:
-    name: 'DeployToDev'
+  DeployMgmtGrps:
+    name: 'DeployMgmtGrps'
     runs-on: ubuntu-latest
     needs: tflint-checks
     environment: Dev
@@ -111,7 +111,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: avm-labs/part01-base
+        working-directory: az-landingzone
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
@@ -183,180 +183,3 @@ jobs:
       #  -backend-config="resource_group_name=${{secrets.BACKEND_AZURE_RESOURCE_GROUP_NAME}}" \
       #  -backend-config="storage_account_name=${{secrets.BACKEND_AZURE_STORAGE_ACCOUNT_NAME}}" \
       #  -backend-config="container_name=${{secrets.BACKEND_STORAGE_ACCOUNT_CONTAINER_NAME_DEV}}"
-
-  DeployToTest:
-    name: 'DeployToTest'
-    runs-on: ubuntu-latest
-    needs: DeployToDev
-    environment: Dev
-    env: 
-      ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
-      ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
-      ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
-      #    ARM_USE_MSI: true
-      ARM_USE_OIDC: true
-      #    ARM_USE_AZUREAD: true # This environment variable tells the backend to use AzureAD auth rather than trying a create a key. It means we can limit the permissions applied to the storage account and container to least priviledge: https://developer.hashicorp.com/terraform/language/settings/backends/azurerm#use_azuread_auth
-        
-      # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: avm-labs/part01-base
-    steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v4
-          
-        
-            # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-          #   - name: Setup Terraform
-          #     uses: hashicorp/setup-terraform@v1
-          #     with:
-          #       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-        
-        
-    - name: HashiCorp - Setup Terraform
-      uses: hashicorp/setup-terraform@v2.0.3
-        
-            # Login to Azure using User-Assigned Managed Identity
-          #  - name: Login to Azure using User-Assigned Managed Identity
-          #    run: |
-          #      az login --identity
-        
-    - name: Azure CLI Login
-      uses: azure/login@v2
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        
-    - name: Azure CLI script
-      uses: azure/cli@v2
-      with:
-        azcliversion: latest
-        inlineScript: |
-          az account show
-          # You can write your Azure CLI inline scripts here. 
-              
-            # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      run: |
-        terraform init \
-        -backend-config="resource_group_name=${{secrets.BACKEND_AZURE_RESOURCE_GROUP_NAME}}" \
-        -backend-config="storage_account_name=${{secrets.BACKEND_AZURE_STORAGE_ACCOUNT_NAME}}" \
-        -backend-config="container_name=${{secrets.BACKEND_STORAGE_ACCOUNT_CONTAINER_NAME_TEST}}"
-        
-        # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -check -diff
-        
-    # checking the current directory
-    - name: Print Working Directory
-      run: pwd
-            
-    # Listing the files in the current directory
-    - name: List Files
-      run: ls -al
-            
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform plan -var-file="test.terraform.tfvars"
-                
-              #-input=false
-        
-    # On push to "main", build or change infrastructure according to Terraform configuration files
-    # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
-    # if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
-      run: terraform apply -auto-approve -var-file="test.terraform.tfvars" 
-
-  DeployToProd:
-    name: 'DeployToProd'
-    runs-on: ubuntu-latest
-    needs: DeployToTest
-    environment: Dev
-    env: 
-      ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
-      ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
-      ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
-      #    ARM_USE_MSI: true
-      ARM_USE_OIDC: true
-      #    ARM_USE_AZUREAD: true # This environment variable tells the backend to use AzureAD auth rather than trying a create a key. It means we can limit the permissions applied to the storage account and container to least priviledge: https://developer.hashicorp.com/terraform/language/settings/backends/azurerm#use_azuread_auth
-            
-      # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: avm-labs/part01-base
-    steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v4
-              
-            
-                # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-              #   - name: Setup Terraform
-              #     uses: hashicorp/setup-terraform@v1
-              #     with:
-              #       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-            
-            
-    - name: HashiCorp - Setup Terraform
-      uses: hashicorp/setup-terraform@v2.0.3
-            
-                # Login to Azure using User-Assigned Managed Identity
-              #  - name: Login to Azure using User-Assigned Managed Identity
-              #    run: |
-              #      az login --identity
-            
-    - name: Azure CLI Login
-      uses: azure/login@v2
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-            
-    - name: Azure CLI script
-      uses: azure/cli@v2
-      with:
-        azcliversion: latest
-        inlineScript: |
-          az account show
-          # You can write your Azure CLI inline scripts here. 
-                  
-                # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      run: |
-        terraform init \
-        -backend-config="resource_group_name=${{secrets.BACKEND_AZURE_RESOURCE_GROUP_NAME}}" \
-        -backend-config="storage_account_name=${{secrets.BACKEND_AZURE_STORAGE_ACCOUNT_NAME}}" \
-        -backend-config="container_name=${{secrets.BACKEND_STORAGE_ACCOUNT_CONTAINER_NAME_PROD}}"
-            
-            # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -check -diff
-            
-            # checking the current directory
-    - name: Print Working Directory
-      run: pwd
-                
-            # Listing the files in the current directory
-    - name: List Files
-      run: ls -al
-                
-            # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform plan -var-file="prod.terraform.tfvars"
-                    
-                  #-input=false
-            
-                  # On push to "main", build or change infrastructure according to Terraform configuration files
-                  # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
-      # if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
-      run: terraform apply -auto-approve -var-file="prod.terraform.tfvars" 
-            
-            #  -backend-config="resource_group_name=${{secrets.BACKEND_AZURE_RESOURCE_GROUP_NAME}}" \
-            #  -backend-config="storage_account_name=${{secrets.BACKEND_AZURE_STORAGE_ACCOUNT_NAME}}" \
-            #  -backend-config="container_name=${{secrets.BACKEND_STORAGE_ACCOUNT_CONTAINER_NAME_PROD}}"
-    
