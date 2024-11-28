@@ -32,7 +32,7 @@ data "azurerm_client_config" "core" {}
 
 module "enterprise_scale" {
   source  = "Azure/caf-enterprise-scale/azurerm"
-  version = "v6.2.0" # change this to your desired version, https://www.terraform.io/language/expressions/version-constraints
+  version = "6.2.0" # change this to your desired version, https://www.terraform.io/language/expressions/version-constraints
 
   default_location = "northeurope"
 
