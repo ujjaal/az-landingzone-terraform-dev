@@ -26,7 +26,7 @@ module "enterprise_scale" {
   source  = "Azure/caf-enterprise-scale/azurerm"
   version = "<version>" # change this to your desired version, https://www.terraform.io/language/expressions/version-constraints
 
-  default_location = "<YOUR_LOCATION>"
+  default_location = "northeurope"
 
   providers = {
     azurerm              = azurerm
@@ -35,6 +35,6 @@ module "enterprise_scale" {
   }
 
   root_parent_id = data.azurerm_client_config.core.tenant_id
-  root_id        = "myorg"
-  root_name      = "My Organization"
+  root_id        = "org-root"
+  root_name      = "Org Root Mgmt Grp"
 }
