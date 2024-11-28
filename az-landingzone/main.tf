@@ -43,6 +43,6 @@ module "enterprise_scale" {
   }
 
   root_parent_id = data.azurerm_client_config.core.tenant_id
-  root_id        = "org-root"
-  root_name      = "Org Root Mgmt Grp"
+  root_id        = "org-root-landingzone"
+  root_name      = "Org Root Landingzone Mgmt Grp"
 }
