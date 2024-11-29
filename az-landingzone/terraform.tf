@@ -4,10 +4,7 @@ terraform {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = ">= 3.18.0"
-      configuration_aliases = [
-        azurerm.connectivity,
-        azurerm.management
-      ]
+      configuration_aliases = [azurerm.connectivity, azurerm.management]
     }
   }
   backend "azurerm" {
