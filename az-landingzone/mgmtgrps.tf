@@ -1,7 +1,3 @@
-data "azurerm_management_group" "root" {
-  name = "Org Root Mgmt Grp"
-}
-
 
 resource "azurerm_management_group" "root_landing_zones" {
   name        = "Org Root Landingzone"
