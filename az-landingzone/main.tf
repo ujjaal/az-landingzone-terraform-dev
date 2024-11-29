@@ -1,27 +1,3 @@
-# We strongly recommend using the required_providers block to set the
-# Azure Provider source and version being used.
-
-terraform {
-  required_version = "~> 1.7"
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 3.107"
-    }
-  }
-  backend "azurerm" {
-    resource_group_name  = var.stgacntrg
-    storage_account_name = var.stgacnt
-    container_name       = var.stgcontainer
-    key                  = "terraform.tfstate"
-  }
-}
-
-provider "azurerm" {
-  use_oidc = true
-  features {}
-}
-
 # You can use the azurerm_client_config data resource to dynamically
 # extract connection settings from the provider configuration.
 
@@ -38,8 +14,8 @@ module "enterprise_scale" {
 
   providers = {
     azurerm              = azurerm
-    azurerm.connectivity = azurerm
-    azurerm.management   = azurerm
+    azurerm.connectivity = azurerm.connectivity
+    azurerm.management   = azurerm.management
   }
 
   root_parent_id = data.azurerm_client_config.core.tenant_id
