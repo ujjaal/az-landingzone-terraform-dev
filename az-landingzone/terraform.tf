@@ -10,7 +10,7 @@ terraform {
       ]
     }
   }
-    backend "azurerm" {
+  backend "azurerm" {
     resource_group_name  = var.stgacntrg
     storage_account_name = var.stgacnt
     container_name       = var.stgcontainer
