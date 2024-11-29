@@ -18,7 +18,7 @@ module "enterprise_scale" {
     azurerm.management   = azurerm.management
   }
 
-  root_parent_id = data.azurerm_client_config.core.tenant_id
-  root_id        = "org-root"
-  root_name      = "Org Root Mgmt Grp"
+  root_parent_id = var.parent_group_id
+  root_id        = "org-root-landingzoe"
+  root_name      = "Org Root Landingzone"
 }
