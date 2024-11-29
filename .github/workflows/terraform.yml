@@ -170,7 +170,7 @@ jobs:
     
     # Import the existing root management group
     - name: Import the existing root management group   
-      run: terraform import data.azurerm_management_group.root /providers/Microsoft.Management/managementGroups/org-root
+      run: terraform import azurerm_management_group.root /providers/Microsoft.Management/managementGroups/org-root
       
     # Generates an execution plan for Terraform
     - name: Terraform Plan
