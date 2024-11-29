@@ -14,6 +14,6 @@ variable "stgcontainer" {
 }
 
 variable "parent_group_id" {
-  type = string
+  type        = string
   description = "ID of the parent management group"
 }
