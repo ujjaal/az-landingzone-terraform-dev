@@ -1,10 +1,6 @@
 # You can use the azurerm_client_config data resource to dynamically
 # extract connection settings from the provider configuration.
 
-data "azurerm_management_group" "root" {
-  display_name = "Org Root Mgmt Grp"
-}
-
 # Call the caf-enterprise-scale module directly from the Terraform Registry
 # pinning to the latest version
 

@@ -4,7 +4,7 @@ stgacnt = "saplatterraformstate"
 
 stgcontainer = "az-landingzone-tfstate"
 
-root_parent_id = "/providers/Microsoft.Management/managementGroups/org-root"
+root_parent_id = "org-root"
 
 # parent_group_name = "Org Root Mgmt Grp"
 /*

@@ -1,3 +1,7 @@
+data "azurerm_management_group" "root" {
+  display_name = "Org Root Mgmt Grp"
+}
+
 resource "azurerm_management_group" "root" {
   name         = "Org Root Mgmt Grp"
   display_name = data.azurerm_management_group.root.display_name
