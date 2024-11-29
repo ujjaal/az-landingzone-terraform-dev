@@ -4,6 +4,15 @@ stgacnt = "saplatterraformstate"
 
 stgcontainer = "az-landingzone-tfstate"
 
-parent_group_id = "/providers/Microsoft.Management/managementGroups/org-root"
+# parent_group_id = "/providers/Microsoft.Management/managementGroups/org-root"
 
 # parent_group_name = "Org Root Mgmt Grp"
+/*
+management_group_names = {
+  root          = "org-root"
+  landing_zones = "org-root-landingzone"
+  connectivity  = "plat-network"
+  management    = "plat-management"
+  identity      = "plat-identity"
+}
+*/

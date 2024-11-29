@@ -168,6 +168,10 @@ jobs:
     - name: List Files
       run: ls -al
     
+    # Import the existing root management group
+    - name: Import the existing root management group   
+      run: terraform import data.azurerm_management_group.root /providers/Microsoft.Management/managementGroups/org-root
+      
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -var-file="terraform.tfvars"
