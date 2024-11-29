@@ -2,7 +2,7 @@
 # extract connection settings from the provider configuration.
 
 data "azurerm_management_group" "root" {
-  name = "Org Root Mgmt Grp"
+  display_name = "Org Root Mgmt Grp"
 }
 
 # Call the caf-enterprise-scale module directly from the Terraform Registry
