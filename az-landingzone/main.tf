@@ -22,5 +22,4 @@ module "enterprise_scale" {
   root_parent_id = data.azurerm_management_group.root.id
   # root_id      = "org-root-landingzoe"
   # root_name    = "Org Root Landingzone"
-  
 }
