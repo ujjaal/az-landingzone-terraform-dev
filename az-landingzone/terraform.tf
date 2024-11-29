@@ -25,17 +25,13 @@ provider "azurerm" {
 
 provider "azurerm" {
   alias = "connectivity"
-  features {
-    
-  }
-  # use_oidc = true
+  features {}
+   use_oidc = true
   # subscription_id = var.subscription_id_connectivity
 }
 provider "azurerm" {
   alias = "management"
-  features {
-    
-  }
-  # use_oidc = true
+  features {}
+   use_oidc = true
   # subscription_id = var.subscription_id_management
 }
