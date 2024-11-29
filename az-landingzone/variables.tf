@@ -17,8 +17,9 @@ variable "parent_group_id" {
   type        = string
   description = "ID of the parent management group"
 }
-
+/*
 variable "parent_group_name" {
   type        = string
   description = "ID of the parent management group"
 }
+*/
