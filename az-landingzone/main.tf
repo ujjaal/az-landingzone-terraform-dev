@@ -19,7 +19,7 @@ module "enterprise_scale" {
     azurerm.connectivity = azurerm.connectivity
     azurerm.management   = azurerm.management
   }
-  root_parent_id = data.azurerm_management_group.root.id
+  root_parent_id = var.root_parent_id
   # root_id      = "org-root-landingzoe"
   # root_name    = "Org Root Landingzone"
 }

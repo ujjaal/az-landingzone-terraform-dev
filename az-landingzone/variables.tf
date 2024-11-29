@@ -12,12 +12,12 @@ variable "stgcontainer" {
   type        = string
   description = "The storage container for az landingzone tf state"
 }
-/*
-variable "parent_group_id" {
-  type        = string
-  description = "ID of the parent management group"
-}
 
+variable "root_parent_id" {
+  type        = string
+  description = "ID of the root management group"
+}
+/*
 variable "parent_group_name" {
   type        = string
   description = "ID of the parent management group"
