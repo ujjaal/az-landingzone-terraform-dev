@@ -169,20 +169,21 @@ jobs:
       run: ls -al
     
     # Import the existing root management group
-    - name: Import the existing root management group   
-      run: terraform import azurerm_management_group.root /providers/Microsoft.Management/managementGroups/org-root
+    #- name: Import the existing root management group   
+    #  run: terraform import azurerm_management_group.root /providers/Microsoft.Management/managementGroups/org-root
       
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -var-file="terraform.tfvars"
-        
+    #  run: terraform plan -var-file="terraform.tfvars"
+      run: terraform plan    
       #-input=false
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
       # if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
-      run: terraform apply -auto-approve -var-file="terraform.tfvars" 
+    #  run: terraform apply -auto-approve -var-file="terraform.tfvars"
+      run: terraform apply
 
       #  -backend-config="resource_group_name=${{secrets.BACKEND_AZURE_RESOURCE_GROUP_NAME}}" \
       #  -backend-config="storage_account_name=${{secrets.BACKEND_AZURE_STORAGE_ACCOUNT_NAME}}" \
