@@ -1,3 +1,4 @@
+/*
 variable "stgacntrg" {
   type        = string
   description = "The resource group of the storage account for az landingzone tf state"
@@ -17,7 +18,7 @@ variable "root_parent_id" {
   type        = string
   description = "ID of the root management group"
 }
-/*
+
 variable "parent_group_name" {
   type        = string
   description = "ID of the parent management group"

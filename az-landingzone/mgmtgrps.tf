@@ -1,3 +1,4 @@
+/*
 data "azurerm_management_group" "root" {
   display_name = "Org Root Mgmt Grp"
 }
@@ -30,3 +31,4 @@ resource "azurerm_management_group" "identity" {
   display_name               = "Platform-Identity"
   parent_management_group_id = azurerm_management_group.root_landing_zones.id
 }
+*/

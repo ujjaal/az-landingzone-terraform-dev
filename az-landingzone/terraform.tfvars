@@ -1,3 +1,4 @@
+/*
 stgacntrg = "platform-rg"
 
 stgacnt = "saplatterraformstate"

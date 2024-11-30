@@ -1,3 +1,4 @@
+/*
 terraform {
   required_version = "~> 1.7"
   required_providers {
@@ -34,3 +35,4 @@ provider "azurerm" {
   use_oidc = true
   # subscription_id = var.subscription_id_management
 }
+*/
